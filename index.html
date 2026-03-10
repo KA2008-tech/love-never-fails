@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stylish SPA ✨</title>
+<style>
+ /* Reset and base */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  body, html {
+    height: 100%;
+    overflow-x: hidden;
+    background: url('bb.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: rgb(218, 231, 233);
+    scroll-behavior: smooth;
+    position: relative;
+  }
+  
+  h1 {
+    top: 0; left: 0; width: 100%;
+    font-size: 3rem;
+    margin: 0;
+    text-shadow: 0 0 15px #ff69b4;
+    
+  }
+
+  
+
+  /* Header */
+  header {
+    position: fixed;
+    text-align: cover;
+    padding: 3rem 2rem 2rem 2rem;
+    font-family: 'Great Vibes', cursive;
+    background: rgba(0, 0, 0, 0.6);
+    font-size: 4rem;
+    color: blue;
+    backdrop-filter: blur(4px);
+    text-shadow: 0 0 12px #ff6f91;
+    user-select: none;
+  }
+
+
+  
+
+  /* --- GLOBAL SECTIONS --- */
+  section {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.98);
+    filter: blur(10px);
+    transition: opacity 1s ease, transform 1s ease, filter 1s ease;
+  }
+
+  section.active {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+    pointer-events: all;
+    z-index: 10;
+  }
+
+  
+
+  /* Gallery slideshow */
+    .gallery img {
+    width: 100%;
+    border-radius: 100px;
+    display: none;
+    user-select: none;
+    box-shadow: 0 0 20px blue;
+  }
+  .gallery img.active {
+    display: block;
+    animation: fadeIn 2s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  /* Live chat box */
+  .chat-box {
+    background: rgba(255,111,145,0.15);
+    border: 2px solid blue;
+    border-radius: 100px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.8rem;
+    padding: 5rem 2rem 5rem 2rem;
+    color: rgb(50, 9, 83);
+    min-height: 150px;
+    position: relative;
+    user-select: none;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .typing-cursor {
+    display: inline-block;
+    width: 2px;
+    background: blue;
+    margin-left: 3px;
+    animation: blink 0.5s steps(2, start) infinite;
+    vertical-align: bottom;
+    height: 1.8rem;
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Navigation */
+  nav {
+    top: 1; left: 0; width: 100%;
+    display: flex;
+    justify-content: center;
+    background: rgba(56, 95, 179, 0.1);
+    backdrop-filter: blur(4px);
+    gap: 20px;
+    padding: 0rem 1rem 0rem 1rem;
+    z-index: 1000;
+    font-weight: 700;
+  }
+  nav a {
+    color: blue;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 16px 16px;
+    border-radius: 150px;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  nav a:hover, nav a.active {
+    background-color: #ff6f91;
+    color: #fff;
+  }
+
+  footer {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 20px blue;
+    text-shadow: 0 0 8px blue;
+    color: blue;
+  }
+
+
+  .quiz-container {
+    background: rgba(56, 95, 179, 0.1);
+    box-shadow: 0 0 20px blue;
+    padding: 20px 30px 10px 30px;
+    border-radius: 100px;
+    max-width: 1400px;
+    text-align: center;
+    position: relative;
+    animation: fadeIn 2s ease-in-out;
+  }
+  .quiz-container h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: rgb(129, 43, 43);
+    text-align: center;
+    text-shadow: 0 0 8px #ff6f91;
+  }
+  .quiz-container p {
+    font-size: 2rem;
+    line-height: 1.6;
+    text-align: center;
+    color: skyblue;
+  }
+  
+
+
+
+  /* Secret surprise */
+  #secret {
+    text-align: center;
+    user-select: none;
+  }
+  #secret input {
+    padding: 12px 15px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: none;
+    margin-top: 15px;
+    outline: none;
+    width: 250px;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.1);
+   }
+  #secret input:focus {
+    box-shadow: 0 0 12px blue;
+  }
+  #secret button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    border-radius: 100px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: blue;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  #secret button:hover {
+    background-color: #e35c7a;
+  }
+  #secretContent {
+    margin-top: 30px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 2rem;
+    color: #ff6f91;
+    text-shadow: 0 0 10px #ff6f91;
+  }
+  #secretContent img {
+    margin-top: 15px;
+    max-width: 100%;
+    border-radius: 100px;
+    box-shadow: 0 0 25px blue;
+  }
+
+
+
+  /* --- LOADING SCREEN --- */
+  #loading {
+    background: radial-gradient(circle, #020024 0%, #090979 50%, #00d4ff 100%);
+    color: white;
+  }
+
+  .loader-logo {
+    font-size: 3rem;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px #00f6ff, 0 0 40px #00f6ff;
+    animation: glowPulse 2s infinite alternate;
+  }
+
+  @keyframes glowPulse {
+    from { opacity: 0.5; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1.1); }
+  }
+
+  .loading-bar {
+    margin-top: 40px;
+    width: 200px; height: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.2);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .loading-bar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -50%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, #00f6ff, #00d4ff);
+    animation: loadAnim 3s linear infinite;
+  }
+
+  @keyframes loadAnim {
+    0% { left: -50%; }
+    100% { left: 100%; }
+  }
+
+  /* --- LOGIN PAGE --- */
+  #login {
+    background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(10,10,40,0.9));
+    color: #fff;
+    backdrop-filter: blur(10px);
+  }
+
+  .login-box {
+    background: rgba(255,255,255,0.1);
+    padding: 40px;
+    border-radius: 100px;
+    box-shadow: 0 0 40px rgba(0,255,255,0.3);
+    text-align: center;
+    animation: floatUp 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+  }
+
+  #login h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 30px #00f6ff;
+  }
+
+  input {
+    padding: 12px;
+    margin: 10px 0;
+    width: 250px;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    transition: 0.4s;
+  }
+
+  input:focus {
+    border-color: #00f6ff;
+    box-shadow: 0 0 15px #00f6ff;
+  }
+
+  /* --- BUTTONS --- */
+  .btn {
+    padding: 12px 28px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    margin: 8px;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(45deg, #00c6ff, #0072ff);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0,198,255,0.8);
+  }
+
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .glow-text {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-shadow: 0 0 25px #fff, 0 0 40px #ff9f43;
+  }
+
+  .home-buttons {
+    display: flex;
+    position: top;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  /* --- CONTENT PAGES --- */
+  #about, #memories, #letters, #gallery, #dream, #chat, #secret, #quiz {
+    color: white;
+    text-align: center;
+    padding-bottom: 60px;
+  }
+
+  /* Navigation */
+  nav {
+    top: 1; left: 0; width: 100%;
+    display: flex;
+    justify-content: center;
+    background: rgba(56, 95, 179, 0.1);
+    backdrop-filter: blur(4px);
+    gap: 20px;
+    padding: 0rem 1rem 0rem 1rem;
+    z-index: 1000;
+    font-weight: 700;
+  }
+  nav a {
+    color: blue;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 16px 16px;
+    border-radius: 150px;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  nav a:hover, nav a.active {
+    background-color: #ff6f91;
+    color: #fff;
+  }
+
+  /* --- BACK BUTTON --- */
+  .back-btn {
+    position: absolute;
+    bottom: 25px;
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+
+  .audio-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #nowPlaying {
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+    color: #00ffffcc;
+    font-weight: bold;
+    text-shadow: 0 0 6px #00ffff;
+    text-align: center;
+  }
+  .heart-button {
+    width: 50px;
+    height: 45px;
+    background-color:  rgba(56, 95, 179, 0.1);
+    position: relative;
+    transform: rotate(-45deg);
+    border: none;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 10px blue, 0 0 20px blue;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .heart-button::before,
+  .heart-button::after {
+    content: "";
+    width: 50px;
+    height: 45px;
+    background-color:  rgba(56, 95, 179, 0.1);
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 10px blue;
+  }
+
+  .heart-button::before {
+    top: -25px;
+    left: 0;
+  }
+
+  .heart-button::after {
+    top: 0;
+    left: 25px;
+  }
+
+  .heart-button.paused {
+    background-color: gray;
+    box-shadow: 0 0 10px blue;
+  }
+
+  #progressContainer {
+    width: 80%;
+    max-width: 500px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px blue;
+  }
+
+  #progress {
+    height: 100%;
+    background: blue;
+    width: 0%;
+    border-radius: 4px;
+    transition: width 0.2s linear;
+    box-shadow: 0 0 10px blue;
+  }
+
+
+
+</style>
+</head>
+<body>
+
+  <!-- LOADING SCREEN -->
+  <section id="loading" class="active">
+    <div class="loader-logo">🌌 Loading Universe...</div>
+    <div class="loading-bar"></div>
+  </section>
+
+  <!-- LOGIN PAGE -->
+  <section id="login">
+    <div class="login-box">
+      <h2>Welcome Back 🌙</h2>
+      <input type="text" id="username" placeholder="Username"><br>
+      <input type="password" id="password" placeholder="Password"><br>
+      <button class="btn" onclick="login()">Login</button>
+    </div>
+  </section>
+  
+
+  <!-- HOME PAGE -->
+  <section id="home">
+  <div class="glow-text">🏠 Welcome Home</div>
+  <div class="home-buttons">
+      <button class="btn" onclick="showSection('about')">About Us</button>
+      <button class="btn" onclick="showSection('memories')">Memories</button>
+      <button class="btn" onclick="showSection('letters')">Letters</button>
+      <button class="btn" onclick="showSection('gallery')">Gallery</button>
+      <button class="btn" onclick="showSection('dream')">Dreams</button>
+      <button class="btn" onclick="showSection('chat')">Chat</button>
+      <button class="btn" onclick="showSection('secret')">Secret</button>
+      <button class="btn" onclick="showSection('quiz')">Fun quiz</button>
+  </div>
+  <button class="btn back-btn" onclick="logout()">🚪 Logout</button>
+  </section>
+
+  <!-- LOVE PAGE -->
+  <section id="about">
+  <div class="quiz-container">
+    <h2>About Us</h2>
+      <p>This is the story of Oxcilia and me — a journey of love, trust, and growing together. From the moment we met, something special sparked between us, and since then, we’ve shared countless memories filled with laughter, support, and understanding.</p>
+      <p>Oxcilia is not just my girlfriend but my best friend and partner in every adventure life brings. Together, we’ve faced challenges, celebrated joys, and built a bond that continues to deepen every day.</p>
+      <p>Our story is a testament to the beauty of love — simple, true, and powerful.</p>
+  </div>
+  <button class="btn back-btn" onclick="showSection('home')">⬅ Back Home</button>
+  </section>
+  
+
+  <!-- DREAMS PAGE -->
+  <section id="memories">
+  <div class="quiz-container">
+    <h2>Memories</h2>
+    <p>We’ve created so many beautiful memories together — late-night talks that lasted until sunrise, laughing until our stomachs hurt over the simplest things, quiet moments holding hands under the stars, and spontaneous adventures that turned ordinary days into something unforgettable. Every memory, big or small, has become a piece of our love story — from celebrating wins together to comforting each other through tough times. These moments have shaped us, strengthened our bond, and reminded us how lucky we are to have found something so real, so rare, and so full of love.</p>
+  </div> 
+  <button class="btn back-btn" onclick="showSection('home')">⬅ Back Home</button>
+  </section>
+
+  <!-- HAPPINESS PAGE -->
+  <section id="letters">
+  <div class="quiz-container">
+  <h2>Love Letters</h2>
+    <p>My Dearest Oxcilia,.....</p>
+    <p>From the moment you came into my life, everything changed, not in loud, sudden ways, but in quiet, beautiful ways that touched my heart deeply. You made the world feel softer, more meaningful, and more full of light.</p>
+    <p>I’ve fallen in love with your smile, your strength, your kindness, and the way you understand me without needing many words.Being with you has taught me that love isn’t just a feeling… it’s a choice we make every day. And every single day, I choose you.</p>
+    <p>You’re not just my girlfriend; you’re the heartbeat of my story, the reason behind my smile, and the greatest gift I could ever ask for.</p>
+    <p>No matter where life leads us, my heart will always find its way back to you. Because loving you feels like home — and that’s where I always want to be.</p>
+    <p>Yours always,Rk</p>
+  </div>
+  <button class="btn back-btn" onclick="showSection('home')">⬅ Back Home</button>
+  </section>
+
+    <!-- Gallery slideshow -->
+  <section id="gallery" class="gallery">
+  <div class="quiz-container">
+    <h2>Gallery</h2>
+    <img src="1.jpg" class="active" alt="Memory 1" />
+    <img src="7.jpg" alt="Memory 2" />
+    <img src="3.jpg" alt="Memory 3" />
+    <img src="0000.jpg" alt="Memory 3" />
+    <img src="000.jpeg" alt="Memory 3" />
+    <img src="00.jpg" alt="Memory 3" />
+    <img src="0.jpeg" alt="Memory 3" />
+  </div>
+  <button class="btn back-btn" onclick="showSection('home')">⬅ Back Home</button>
+  </section>
+
+  <!-- Future Dreams -->
+  <section id="dream">
+  <div class="quiz-container">
+    <h2>Future Dreams</h2>
+    <p>Oxcilia and I dream of a future built on love, trust, and shared purpose. We see ourselves growing together, supporting each other through every challenge, celebrating every victory, and creating a life filled with meaning and joy. We imagine traveling to new places, building a home full of laughter, and chasing our dreams hand in hand. No matter what the future holds, we know that as long as we have each other, we can turn our hopes into something real and lasting.</p>
+  </div>
+  <button class="btn back-btn" onclick="showSection('home')">⬅ Back Home</button>
+  </section>
+
+  <!-- Live Chat typing effect -->
+  <section id="chat" class="chat-box">
+    <span id="chatText"></span><span class="typing-cursor"></span>
+    <button class="btn back-btn" onclick="showSection('home')">⬅ Back Home</button>
+  </section>
+
+  <!-- Secret Surprise -->
+  <section id="secret">
+  <div class="quiz-container">
+    <h2>Secret Surprise 💖</h2>
+    <input type="password" id="secretCode" placeholder="Enter password to unlock" autocomplete="off" />
+    <button onclick="checkPassword()">Unlock</button>
+    <div id="secretContent" style="display:none;">
+      <p>
+        <div class="heart">Only❤️You</div>
+        Oxcilia, you are my forever. 🌹
+      </p>
+      <img src="v.jpg" alt="Secret Rose" />
+      <p>Only you my love, Oxcilia there will be no one else I will ever love in this world as much as I do 🌹</p>
+      <p>Please listen to our song. Dedication song:<br> "Am not Alone." by Alan Walker</p>
+      <div id="nowPlaying">Now Playing: Alan Walker – Alone</div>
+      <div class="audio-player">
+        <audio id="audio" preload="metadata">
+          <source src="Tyler_Shaw_-_Love_You_Still__abcdefu_romantic_version___Official_Video_(128k).mp3" type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+
+        <button id="playPauseBtn" class="heart-button" aria-label="Play or Pause"></button>
+
+        <div id="progressContainer">
+          <div id="progress"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn back-btn" onclick="showSection('home')">⬅ Back Home</button>
+  </section>
+
+
+    
+  <script>
+
+  // Gallery slideshow
+    const galleryImages = document.querySelectorAll('.gallery img');
+    let currentIndex = 0;
+    function showNextImage() {
+      galleryImages[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % galleryImages.length;
+      galleryImages[currentIndex].classList.add('active');
+    }
+  setInterval(showNextImage, 4000);
+
+  // Live chat typing effect
+    const chatTexts = [
+      "Before you read our story, know this; we got lost, but we never stopped lookin for each other.",
+      "A LOVE AGAINST THE ODDS 💔😭❤️‍🩹",
+      "Oxcilia and I met in a time when everything around us seemed uncertain. Life was pulling us in different directions, distance 🌏💔, misunderstandings 😞💔, and challenges tested the strength of our bond every single day. There were moments when the silence between us grew too heavy 😶‍🌫️, and tears filled the nights 🌙😭 when we wondered if love alone could hold us together.",
+      "We faced heartbreak 💔😢 times when we thought the weight of our struggles would break us apart. Yet through every painful moment, there was a quiet hope ✨🙏 in our hearts, a flicker that refused to die. We learned that love isn’t always about perfect days 🌤️ or easy smiles 😊, but about holding on when everything else feels impossible.",
+      "Despite the distance and the doubts, we never stopped believing in us 🙏💖. Slowly, with patience and courage 💪❤️, we found our way back to each other, stronger, wiser, and more in love than ever ❤️🔥. Our story is a reminder that even the darkest storms 🌧️🌩️ eventually give way to the brightest skies 🌈, and that true love can survive anything when two hearts refuse to let go.",
+      "Today, Oxcilia and I stand together, not because the journey was easy, but because we chose each other through it all 🤝💞. Our love is proof that hope and perseverance can turn even the saddest story into a beautiful beginning 🌹✨.",
+      "Oxcilia, your smile lights up my darkest days.",
+      "Every moment with you is a treasured memory.",
+      "You are my heart's sweetest song.",
+      "Together, forever and always.",
+      "Let me narrate to you an interesting story...",
+      "It`s time for a LOVE STORY.",
+      "There was once a guy who was living in a certain place. The guy had a girl whom he grew up with because they were together in primary till secondary.",
+      "As they reached secondary school the guy developed feelings for the girl not simply because of his friends, the guy proposed to they girl.",
+      "The girl loved the characters of that guy but she did not accept his proposal instead she lied that she had stopped dating.",
+      "The feedback that the girl brought to the guy shocked him, he became so worried. Even though the girl refused the proposal, the guy did not hate the girl, because the love he had for her was bigger infact the percentage was uncountable.",
+      "After all that they got separated because the girl changed the schoo. Both of them were heart broken especially the guy about it, even though they never showed it to each other.",
+      "So the girl never loved the school she was taken to, that is how she tried by all means to be moved from that school.",
+      "Luckly the girl got back to the previos school. Knowing that made the guy happy because he enjoyed seeing the girl everyday.",
+      "As time moved, the guy tried to approach the girl that is how the guy found an opportunity of being her friend on Facebook. For this reason they got closer to each other.",
+      "The guy befriended the girl so that it could be easier to bring her in his life.",
+      "Whilst being friends the girl had another guys from a different class who were her friends. These guys used to visit the girl in her class almost everyday. All that shocked the guy, he became so jelousy but the girl never realised that it was hurting him.",
+      "Even when it was in such a way, the guy and the girl never broken up.",
+      "Just after some days the guy confessed the love he had for the girl because he thought that someone could take up his place.",
+      "The girl never said anything romantic though she also had felings for the guy. Anyway the girl loved the guy so much that she was thinking about him each and every time.",
+      "Since the girl did not say anything lovely, the guy started thinking that the girl never loved him anymore. The guy became heartbroken though he was not showing all that, even the guy started to move on.",
+      "The girl kept on thinking about what she was told by the guy. The only thing which she was wondering about was that, dating the guy would affect her studies so much.",
+      "Therefore, she took too long to decide what to do, that is how she just decided to accept dating the guy. It was so much funny that she felt shy to go tell the guy by herself, instead she sent someone else.",
+      "The person whom she sent did the job, for seeing that the guy felt as if it was a dream because he thought that the girl could never love him back.",
+      "In no time, they started dating, the guy was over the moon because his dream came to life.",
+      "As they were dating the girl never showed love to the guy but she was struggling in her thoughts thinking about him because he loved him so much. It is just that you can not know what is going on others minds otherwise the guy couldn`t have suffered in that way thinking that the girl never loved him.",
+      "That relationship was endless. people tried to make them separate but they failed. This was the strongest bond ever.",
+      "Dropped with Love💖 THE END. This love story was narrated by her.",
+      "This is what she is encouraging those in relationships.",
+      "Love tends to be better when you`re with a right person and it can never hurt. The most significant things, which must be done to make it stronger is having trust and care, you have to make sure that whenever you think or fell something goes wrong with your partner, Open up do not just stay quiet while you`re hurt." 
+    ];
+    let chatIndex = 0;
+    let charIndex = 0;
+    const chatTextElem = document.getElementById('chatText');
+
+    function typeChat() {
+      if (charIndex < chatTexts[chatIndex].length) {
+        chatTextElem.textContent += chatTexts[chatIndex][charIndex];
+        charIndex++;
+        setTimeout(typeChat, 100);
+      } else {
+        setTimeout(() => {
+          chatTextElem.textContent = '';
+          charIndex = 0;
+          chatIndex = (chatIndex + 1) % chatTexts.length;
+          typeChat();
+        }, 3000);
+      }
+    }
+  typeChat();
+
+  // Secret surprise unlock
+  function checkPassword() {
+    const input = document.getElementById('secretCode').value.trim().toLowerCase();
+    if(input === 'oxcilia') {
+      document.getElementById('secretContent').style.display = 'block';
+    } else {
+      alert('Incorrect password! Try again, Rk.');
+    }
+  }
+
+  window.onload = () => {
+    // Show loading first
+    setTimeout(() => {
+      showSection('login');
+    }, 3500); // 3.5 seconds loading
+  };
+
+  function showSection(id) {
+    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+    setTimeout(() => {
+      document.getElementById(id).classList.add("active");
+    }, 300);
+  }
+
+  function login() {
+    const u = document.getElementById('username').value.trim();
+    const p = document.getElementById('password').value.trim();
+    if(u === 'user' && p === 'pass') {
+      showSection('home');
+    } else {
+      alert("❌ Invalid credentials");
+    }
+  }
+
+  function logout() {
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+    showSection('login');
+  }
+
+
+
+  const audio = document.getElementById("audio");
+  const playPauseBtn = document.getElementById("playPauseBtn");
+  const progressContainer = document.getElementById("progressContainer");
+  const progress = document.getElementById("progress");
+
+  // Toggle audio play/pause
+  function toggleAudio() {
+    if (audio.paused) {
+      audio.play();
+      playPauseBtn.classList.remove("paused");
+    } else {
+      audio.pause();
+      playPauseBtn.classList.add("paused");
+    }
+  }
+
+  playPauseBtn.addEventListener("click", toggleAudio);
+  // Update progress bar
+  audio.addEventListener("timeupdate", () => {
+    const percent = (audio.currentTime / audio.duration) * 100;
+    progress.style.width = percent + "%";
+  });
+  // Seek with progress bar
+  progressContainer.addEventListener("click", (e) => {
+    const rect = progressContainer.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const newTime = (clickX / rect.width) * audio.duration;
+    audio.currentTime = newTime;
+  });
+  
+
+
+
+  </script>
+
+</body>
+</html>
